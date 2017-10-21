@@ -7,41 +7,30 @@ app.factory("Auth", ["$firebaseAuth",
   }
 ]);
 
-app.controller("SampleCtrl", ["$scope", "Auth",
-	function($scope, Auth) {
-		$scope.signInWithPopup("google").then(function(result) {
-  console.log("Signed in as:", result.user.uid);
-}).catch(function(error) {
-  console.error("Authentication failed:", error);
-})}]);
-/*
-// and use it in our controller
-app.controller("SampleCtrl", ["$scope", "Auth",
-  function($scope, Auth) {
-    $scope.createUser = function() {
-      $scope.message = null;
-      $scope.error = null;
+var provider = new firebase.auth.GoogleAuthProvider();
 
-      // Create a new user
-      Auth.$createUserWithEmailAndPassword($scope.email, $scope.password)
-        .then(function(firebaseUser) {
-          $scope.message = "User created with uid: " + firebaseUser.uid;
-        }).catch(function(error) {
-          $scope.error = error;
-        });
-    };
+function authorize() {
+  firebase.auth().signInWithRedirect(provider);
+}
 
-    $scope.deleteUser = function() {
-      $scope.message = null;
-      $scope.error = null;
-
-      // Delete the currently signed-in user
-      Auth.$deleteUser().then(function() {
-        $scope.message = "User deleted";
-      }).catch(function(error) {
-        $scope.error = error;
-      });
-    };
+firebase.auth().getRedirectResult().then(function(result) {
+  console.log("got result")
+  if (result.credential) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    var email = result.user.email;
+    console.log("got token", email, token)
+    // ...
   }
-]);
-*/
+  // The signed-in user info.
+  var user = result.user;
+}).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});

@@ -58,17 +58,24 @@
   <body>
     <h1>Goodby, cruel world! That I do will don't</h1>
     
-<div ng-app="openPool" ng-controller="SampleCtrl">
-  Email: <input type="text" ng-model="email">
-  Password: <input type="text" ng-model="password">
+<div ng-app="openPool" ng-controller="SampleCtrl", ng-init="quantity=1;cost=5">
+  
+  <a class="btn btn-large btn-success" id="login" onclick="authorize()">login</a>
+  <br><br>
+  <a class=ng-click="login()" "btn btn-large btn-success" id="login2" >login</a>
+  You email: {{ quantity + cost }} 
 
+  <md-button ng-click="login()">
+  Login with Gmail
+  </md-button>
+
+  <md-button ng-click="logout()">
+  Logout
+  </md-button>
   <br><br>
 
-  <button ng-click="createUser()">Create User</button>
 
-  <br><br>
 
-  <button ng-click="deleteUser()">Delete User</button>
 
   <p ng-if="message">Message: <strong>{{ message }}</strong></p>
   <p ng-if="error">Error: <strong>{{ error }}</strong></p>
