@@ -1,52 +1,38 @@
 var app = angular.module("openPool", ["firebase"]);
 
-// this factory returns a synchronized array of chat messages
-app.factory("chatMessages", ["$firebaseArray",
-  function($firebaseArray) {
-    // create a reference to the database location where we will store our data
-    var ref = firebase.database().ref();
-
-    // this uses AngularFire to create the synchronized array
-    return $firebaseArray(ref);
+// let's create a re-usable factory that generates the $firebaseAuth instance
+app.factory("Auth", ["$firebaseAuth",
+  function($firebaseAuth) {
+    return $firebaseAuth();
   }
 ]);
 
-// inject $firebaseAuth into our controller
-app.controller("SampleCtrl", ["$scope", "$firebaseAuth",
-  function($scope, $firebaseAuth) {
-    var auth = $firebaseAuth();
-  }
-]);
+// and use it in our controller
+app.controller("SampleCtrl", ["$scope", "Auth",
+  function($scope, Auth) {
+    $scope.createUser = function() {
+      $scope.message = null;
+      $scope.error = null;
 
-app.controller("ChatCtrl", ["$scope", "chatMessages",
-  // we pass our new chatMessages factory into the controller
-  function($scope, chatMessages) {
-    $scope.user = "Guest " + Math.round(Math.random() * 100);
-
-    // we add chatMessages array to the scope to be used in our ng-repeat
-    $scope.messages = chatMessages;
-
-    // a method to create new messages; called by ng-submit
-    $scope.addMessage = function() {
-      // calling $add on a synchronized array is like Array.push(),
-      // except that it saves the changes to our database!
-      $scope.messages.$add({
-        from: $scope.user,
-        content: $scope.message
-      });
-
-      // reset the message input
-      $scope.message = "";
+      // Create a new user
+      Auth.$createUserWithEmailAndPassword($scope.email, $scope.password)
+        .then(function(firebaseUser) {
+          $scope.message = "User created with uid: " + firebaseUser.uid;
+        }).catch(function(error) {
+          $scope.error = error;
+        });
     };
 
-    // if the messages are empty, add something for fun!
-    $scope.messages.$loaded(function() {
-      if ($scope.messages.length === 0) {
-        $scope.messages.$add({
-          from: "Firebase Docs",
-          content: "Hello world!"
-        });
-      }
-    });
+    $scope.deleteUser = function() {
+      $scope.message = null;
+      $scope.error = null;
+
+      // Delete the currently signed-in user
+      Auth.$deleteUser().then(function() {
+        $scope.message = "User deleted";
+      }).catch(function(error) {
+        $scope.error = error;
+      });
+    };
   }
 ]);

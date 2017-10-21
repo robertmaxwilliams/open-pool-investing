@@ -56,17 +56,23 @@
     
   </head>
   <body>
-    <h1>Goodby, cruel world! That I do</h1>
+    <h1>Goodby, cruel world! That I do will</h1>
     
-   <div ng-app="openPool" ng-controller="ChatCtrl">
-    <ul class="chatbox">
-      <li ng-repeat="message in messages">{{ message.from }}: {{ message.content }}</li>
-    </ul>
-    <form ng-submit="addMessage()">
-      <input type="text" ng-model="message">
-      <input type="submit" value="Add Message">
-    </form>
-  </div>
-                
+<div ng-app="sampleApp" ng-controller="SampleCtrl">
+  Email: <input type="text" ng-model="email">
+  Password: <input type="text" ng-model="password">
+
+  <br><br>
+
+  <button ng-click="createUser()">Create User</button>
+
+  <br><br>
+
+  <button ng-click="deleteUser()">Delete User</button>
+
+  <p ng-if="message">Message: <strong>{{ message }}</strong></p>
+  <p ng-if="error">Error: <strong>{{ error }}</strong></p>
+</div>
+
   </body>
 </html>
