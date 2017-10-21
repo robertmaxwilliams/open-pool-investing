@@ -11,6 +11,13 @@ app.factory("chatMessages", ["$firebaseArray",
   }
 ]);
 
+// inject $firebaseAuth into our controller
+app.controller("SampleCtrl", ["$scope", "$firebaseAuth",
+  function($scope, $firebaseAuth) {
+    var auth = $firebaseAuth();
+  }
+]);
+
 app.controller("ChatCtrl", ["$scope", "chatMessages",
   // we pass our new chatMessages factory into the controller
   function($scope, chatMessages) {
