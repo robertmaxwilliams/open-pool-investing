@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="openPool">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -58,19 +58,15 @@
   <body ng-controller="SampleCtrl">
     <h1>Goodby, cruel world!</h1>
     
-     <ul>
-      <li ng-repeat="message in messages">
-        <!-- edit a message -->
-        <input ng-model="message.text" ng-change="messages.$save(message)" />
-        <!-- delete a message -->
-        <button ng-click="messages.$remove(message)">Delete Message</button>
-      </li>
+   <div ng-app="openPool" ng-controller="ChatCtrl">
+    <ul class="chatbox">
+      <li ng-repeat="message in messages">{{ message.from }}: {{ message.content }}</li>
     </ul>
-    <!-- push a new message onto the array -->
     <form ng-submit="addMessage()">
-      <input ng-model="newMessageText" />
-      <button type="submit">Add Message</button>
+      <input type="text" ng-model="message">
+      <input type="submit" value="Add Message">
     </form>
+  </div>
                 
   </body>
 </html>
