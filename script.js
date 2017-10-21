@@ -2,6 +2,15 @@ var app = angular.module("openPool", ["firebase"]);
 
 
 app.controller("SampleCtrl", function($scope, $firebaseArray) {
+  var auth = $firebaseAuth();
+
+  // login with Facebook
+  auth.$signInWithPopup("google").then(function(firebaseUser) {
+    console.log("Signed in as:", firebaseUser.uid);
+  }).catch(function(error) {
+    console.log("Authentication failed:", error);
+  });
+  
   var ref = firebase.database().ref().child("messages");
   // create a synchronized array
   $scope.messages = $firebaseArray(ref);
