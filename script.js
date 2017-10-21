@@ -13,7 +13,7 @@ app.controller("SampleCtrl", ["$scope", "Auth",
   console.log("Signed in as:", result.user.uid);
 }).catch(function(error) {
   console.error("Authentication failed:", error);
-})});
+})}]);
 /*
 // and use it in our controller
 app.controller("SampleCtrl", ["$scope", "Auth",
