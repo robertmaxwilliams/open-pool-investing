@@ -32,10 +32,10 @@
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 
 
-<link href="http://fonts.googleapis.com/css?family=Corben:bold" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Corben:bold" rel="stylesheet" type="text/css">
 
 
- <link href="http://fonts.googleapis.com/css?family=Nobile" rel="stylesheet" type="text/css">
+ <link href="https://fonts.googleapis.com/css?family=Nobile" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="custom.css">
     <!-- my js files -->
     <script src="script.js"></script>
@@ -57,15 +57,18 @@
     <br><br>
     <button ng-click="showPoolForm()">create new pool</button>
     <form ng-submit="saveNewPool()"  class="hidden" id="poolForm">
+		<br>
         <label>Pool Name: </label>
         <input type="text" ng-model="newpool.name">
 
         <label>Max Investors: </label>
         <input type="number" ng-model="newpool.max">
 
+        <br> 
+
         <label>Suggested assets: </label>
         <input type="text" ng-model="newpool.assets_suggestions">
-        
+
         <label>Primary invesment from you: </label>
         <input type="text" ng-model="newpool.first_investment">
 
@@ -82,7 +85,7 @@
                        is-disabled="status.isFirstDisabled">
     Creator: {{x.creator}} <br>
 		Investors: {{x.investors | json}} <br>
-        Type in you preference in which asset to invest in. Recommended assets are shown in grey. Enter how many dollars you want to commit and submit. All submissions are final, no refunds or withdraws from pools.
+        Type in you preference in which asset to invest in, seperated by spaces. Recommended assets are shown in grey. Enter how many dollars you want to commit and submit. All submissions are final, no refunds or withdraws from pools.
         <form ng-submit="enterPool(x)" id="entryForm">
           <table>
             <tr>
