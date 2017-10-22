@@ -126,6 +126,7 @@ app.controller('myCtrl', function($scope, Pool, User, ObjectsList) {
       if ($scope.user === undefined){
         alert("please sign in first");
       } else {
+		$scope.hidePoolForm()
         $scope.newpool.number_investors = 1;
         $scope.newpool.creator = $scope.user.userid;
         $scope.newpool.investors = {}

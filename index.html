@@ -63,20 +63,20 @@
     <form ng-submit="saveNewPool()"  class="hidden" id="poolForm">
 		<br>
         <label>Pool Name: </label>
-        <input type="text" ng-model="newpool.name">
+        <input type="text" ng-model="newpool.name" required>
 
         <label>Max Investors: </label>
-        <input type="number" ng-model="newpool.max">
+        <input type="number" ng-model="newpool.max" required>
 
         <br> 
 
         <label>Suggested assets: </label>
-        <input type="text" ng-model="newpool.assets_suggestions">
+        <input type="text" ng-model="newpool.assets_suggestions" required>
 
         <label>Primary invesment from you: </label>
-        <input type="number" ng-model="newpool.first_investment">
+        <input type="number" ng-model="newpool.first_investment" required>
 
-        <button type="submit" ng-click="hidePoolForm()">create pool</button>
+        <button type="submit">create pool</button>
     </form>
 
     <br><br>
@@ -103,8 +103,8 @@
             </tr>
             <tr>
               <td><button type="submit">Join Pool</button></td>
-              <td><input type="text" placeholder="{{ x.assets_suggestions }}" ng-model="x.assets_input_string"></td>
-              <td><input type="number" default=10 ng-model="x.usd_spent_input"></td>
+              <td><input type="text" placeholder="{{ x.assets_suggestions }}" ng-model="x.assets_input_string" required></td>
+              <td><input type="number" default=10 ng-model="x.usd_spent_input" required></td>
             </tr>
         </table>
       </form>
