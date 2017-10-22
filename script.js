@@ -67,12 +67,14 @@ app.controller('myCtrl', function($scope, Pool, User, ObjectsList) {
     //login
     $scope.login = function() {
       firebase.auth().signInWithRedirect(provider);
+      $scope.userid = "loading account, please wait.";
     };
     //logout
     $scope.logout = function() {
       firebase.auth().signOut().then(function() {
         $scope.userid = "log out";
-        $scope.$apply()
+        $scope.$apply();
+        location.reload();
       }, function(error) {
         console.log(error);
       });
@@ -86,27 +88,28 @@ app.controller('myCtrl', function($scope, Pool, User, ObjectsList) {
         var token = result.credential.accessToken;
         var email = result.user.email;
         console.log("got token", email, token)
-        $scope.user = result.user.email;
         //extract email prefix to use as unique ID TODO: don't do this
         $scope.userid = email.substring(0, email.indexOf("@"));
         //create synced user for submitting user info
         $scope.user = User($scope.userid);
-        $scope.user.key = $scope.userid;
+        if ($scope.token === undefined){
+          $scope.user.userid= $scope.userid;
 
-        //fill up with data in admin-side format
-        $scope.user.token = token;
-        $scope.user.foo = "bar";
-        $scope.user.screen_name = result.user.displayName;
-        $scope.user.picture = result.user.photoURL;
-        $scope.user.email_address = result.user.email;
-        $scope.user.bank_usd_balance = 50;
-        $scope.user.bank_btc_balance = 2;
-        $scope.user.bank_ether_balance = 10;
-        $scope.user.$save().then(function(){
-          console.log("Your user stuff:");
-          }).catch(function(error){alert('Error!');})
-        console.log($scope.user);
-        $scope.$apply();
+          //fill up with data in admin-side format
+          $scope.user.token = token;
+          $scope.user.usd_balance = 50;
+          $scope.user.screen_name = result.user.displayName;
+          $scope.user.picture = result.user.photoURL;
+          $scope.user.email_address = result.user.email;
+          $scope.user.$save().then(function(){
+            console.log("Your user stuff:");
+            }).catch(function(error){alert('Error!');})
+          console.log($scope.user);
+          $scope.showUserInfo();
+          $scope.$apply();
+        } else {
+          console.log("Account already exists");
+        }
       }
     }).catch(function(error) {
       console.log(error);
@@ -115,15 +118,40 @@ app.controller('myCtrl', function($scope, Pool, User, ObjectsList) {
     $scope.newpool = Pool();
     //save user's new pool
     $scope.saveNewPool = function() {
+      if ($scope.user === undefined){
+        alert("please sign in first");
+      } else {
+        $scope.newpool.number_investors = 1;
+        $scope.newpool.creator = $scope.user.userid;
+        $scope.newpool.investors = new Object();
         $scope.newpool.$save().then(function() {
-          alert('Pool saved!');
+          console.log("pool saved!");
         }).catch(function(error) {
           alert('Error!');
         });
-    $scope.newpool = Pool();
+        $scope.newpool = Pool();
+      }
     };
     
-
     //read existing pools into pools variable
     $scope.pools = ObjectsList("pools");
+
+    $scope.showPoolForm = function() {
+      if ($scope.user === undefined){
+        alert("please sign in first")
+      } else {
+        document.getElementById("poolForm").classList.remove('hidden');
+      }
+    }
+
+    $scope.showUserInfo = function() {
+     document.getElementById("userInfo").classList.remove('hidden');
+    }
+
+    $scope.hidePoolForm = function() {
+     document.getElementById("poolForm").classList.add('hidden');
+    }
+
 });
+
+

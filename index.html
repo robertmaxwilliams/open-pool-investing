@@ -34,28 +34,46 @@
     <br>
       <li *ngFor="let obj of myArray">{{obj | json}}</li>
     <br>
-    {{userid}} : {{user | json}}
+    <div id="userInfo" class="hidden">
+      You are: {{userid}} 
+      <br>
+      Balance: {{user.usd_balance}}
+    </div>
     <br><br>
     <button ng-click="login()">Log in</button>
     <button ng-click="logout()">Log out</button>
-    <button ng-click="">nothing</button>
    
     <br><br>
- 
-    <form ng-submit="saveNewPool()">
+    <button ng-click="showPoolForm()">create new pool</button>
+    <form ng-submit="saveNewPool()"  class="hidden" id="poolForm">
         <label>Pool Name: </label>
         <input type="text" ng-model="newpool.name">
 
         <label>Max Investors: </label>
-        <input type="text" ng-model="newpool.max">
+        <input type="number" ng-model="newpool.max">
 
-        <button type="submit">create pool</button>
+        <label>Suggested assets: </label>
+        <input type="text" ng-model="newpool.assets_suggestions">
+
+        <button type="submit" ng-click="hidePoolForm()">create pool</button>
     </form>
 
+    <br><br>
+
     <table>
+        <td>Pool Name</td>
+        <td>Investors in Pool</td>
+        <td>Creator's userid</td>
+        <td></td>
+        <td>Assets to invest in</td>
+        <td>amount to invest (usd)</td>
       <tr ng-repeat="x in pools">
         <td>{{ x.name }}</td>
-        <td>{{ x.max }}</td>
+        <td>{{ x.number_investors }} / {{ x.max }}</td>
+        <td>{{ x.creator }}</td>
+        <td><button onlick="unshowshit">+</button></td>
+        <td><input type="text" placeholder="{{ x.assets_suggestions }}" ng-model="x.assets"></td>
+        <td><input type="number" default=10 ng-model="x.values"></td>
       </tr>
     </table>
 
