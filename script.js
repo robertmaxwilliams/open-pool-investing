@@ -171,7 +171,7 @@ app.controller('myCtrl', function($scope, Pool, User, ObjectsList) {
                        assets : x.assets_input_string,
                        value : x.usd_spent_input
                        };
-      x.number_investors = x.length;
+      x.number_investors = Object.keys(x.investors).length 
       $scope.pools.$save(x);
       $scope.user.usd_balance += -x.usd_spent_input + current_investment;
       $scope.user.$save();

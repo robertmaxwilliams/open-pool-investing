@@ -41,7 +41,11 @@
     <script src="script.js"></script>
   </head>
   <body ng-app="openPool" class="text-center container-narrow">
-    <h1 id="intro">Hello, login with Google and get started using pools.</h1>
+	<div class="text-left">
+		<h1> Open Pool Investing </h1>
+		<h5> <i> because trust and money don't go together </i> </h5>
+	</div>
+    <h1 id="intro"><br><br>Hello, login with Google and get started using pools.</h1>
     <div ng-controller="myCtrl">
     <div id="userInfo" class="hidden text-left">
       <h2>
@@ -70,7 +74,7 @@
         <input type="text" ng-model="newpool.assets_suggestions">
 
         <label>Primary invesment from you: </label>
-        <input type="text" ng-model="newpool.first_investment">
+        <input type="number" ng-model="newpool.first_investment">
 
         <button type="submit" ng-click="hidePoolForm()">create pool</button>
     </form>
@@ -85,7 +89,11 @@
                        is-disabled="status.isFirstDisabled">
     Creator: {{x.creator}} <br>
 		Investors: {{x.investors | json}} <br>
+		<br>
+		<div class="text-left">
         Type in you preference in which asset to invest in, seperated by spaces. Recommended assets are shown in grey. Enter how many dollars you want to commit and submit. All submissions are final, no refunds or withdraws from pools.
+		</div>
+		<br>
         <form ng-submit="enterPool(x)" id="entryForm">
           <table>
             <tr>
