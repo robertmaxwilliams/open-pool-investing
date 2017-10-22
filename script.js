@@ -161,6 +161,7 @@ app.controller('myCtrl', function($scope, Pool, User, ObjectsList) {
           return;
         }
       }
+
       console.log(x.usd_spent_input);
       if (x.usd_spent_input < 0){
         alert("Negative values are not allowed");
@@ -170,6 +171,7 @@ app.controller('myCtrl', function($scope, Pool, User, ObjectsList) {
                        assets : x.assets_input_string,
                        value : x.usd_spent_input
                        };
+      x.number_investors = x.length;
       $scope.pools.$save(x);
       $scope.user.usd_balance += -x.usd_spent_input + current_investment;
       $scope.user.$save();
